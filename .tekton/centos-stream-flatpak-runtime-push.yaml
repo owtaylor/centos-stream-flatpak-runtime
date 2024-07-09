@@ -2,20 +2,18 @@ apiVersion: tekton.dev/v1
 kind: PipelineRun
 metadata:
   annotations:
-    build.appstudio.openshift.io/repo: https://github.com/owtaylor/fedora-flatpak-runtime?rev={{revision}}
+    build.appstudio.openshift.io/repo: https://github.com/owtaylor/centos-stream-flatpak-runtime?rev={{revision}}
     build.appstudio.redhat.com/commit_sha: '{{revision}}'
-    build.appstudio.redhat.com/pull_request_number: '{{pull_request_number}}'
     build.appstudio.redhat.com/target_branch: '{{target_branch}}'
     pipelinesascode.tekton.dev/max-keep-runs: "3"
-    pipelinesascode.tekton.dev/on-cel-expression: event == "pull_request" && target_branch
-      == "main" && ( "runtime/***".pathChanged() || ".tekton/fedora-flatpak-runtime-pull-request.yaml".pathChanged()
-      )
+    pipelinesascode.tekton.dev/on-cel-expression: event == "push" && target_branch
+      == "main"
   creationTimestamp: null
   labels:
     appstudio.openshift.io/application: flatpak-module-tools
-    appstudio.openshift.io/component: fedora-flatpak-runtime
+    appstudio.openshift.io/component: centos-stream-flatpak-runtime
     pipelines.appstudio.openshift.io/type: build
-  name: fedora-flatpak-runtime-on-pull-request
+  name: centos-stream-flatpak-runtime-on-push
   namespace: otaylor-tenant
 spec:
   params:
@@ -23,10 +21,8 @@ spec:
     value: Containerfile
   - name: git-url
     value: '{{source_url}}'
-  - name: image-expires-after
-    value: 5d
   - name: output-image
-    value: quay.io/redhat-user-workloads/otaylor-tenant/flatpak-module-tools/fedora-flatpak-runtime:on-pr-{{revision}}
+    value: quay.io/redhat-user-workloads/otaylor-tenant/flatpak-module-tools/c10s-flatpak-runtime:{{revision}}
   - name: path-context
     value: .
   - name: revision

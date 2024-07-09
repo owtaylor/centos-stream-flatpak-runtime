@@ -1,10 +1,10 @@
 flatpak:
-    id: org.fedoraproject.Platform
+    id: org.centos.stream.Platform
     build-runtime: true
-    name: f40/flatpak-runtime
+    name: el10/flatpak-runtime
     component: flatpak-runtime
-    branch: f40
-    sdk: org.fedoraproject.Sdk
+    branch: el10
+    sdk: org.centos.stream.Sdk
     finish-args: >
         --env=GI_TYPELIB_PATH=/app/lib64/girepository-1.0 --env=GST_PLUGIN_SYSTEM_PATH=/app/lib64/gstreamer-1.0:/usr/lib64/gstreamer-1.0
         --env=LD_LIBRARY_PATH=/app/lib64 --env=PATH=/app/sbin:/app/bin:/usr/sbin:/usr/bin
@@ -18,9 +18,9 @@ flatpak:
     cleanup-commands: |
         appstream-compose --verbose   \
             --prefix=/usr             \
-            --basename=org.fedoraproject.Platform \
+            --basename=org.centos.stream.Platform \
             --origin=flatpak          \
-            org.fedoraproject.Platform 1>&2
+            org.centos.stream.Platform 1>&2
 
         mv -f /usr/bin/flatpak-xdg-email /usr/bin/xdg-email
         mv -f /usr/bin/flatpak-xdg-open /usr/bin/xdg-open
@@ -39,11 +39,8 @@ flatpak:
         touch -d @0 /usr/share/fonts /usr/share/fonts/*
         fc-cache -rs
     packages:
-    - abattis-cantarell-vf-fonts
     - acl
-    - adobe-source-code-pro-fonts
     - adwaita-cursor-theme
-    - adwaita-gtk2-theme
     - adwaita-icon-theme
     - alsa-lib
     - alsa-plugins-arcamav
@@ -55,7 +52,6 @@ flatpak:
     - alternatives
     - appstream
     - appstream-data
-    - aspell
     - at-spi2-atk
     - at-spi2-core
     - atk
@@ -65,20 +61,17 @@ flatpak:
     - authselect-libs
     - avahi-glib
     - avahi-libs
-    - avif-pixbuf-loader
     - basesystem
     - bash
     - bluez-libs
-    - bubblewrap
     - bzip2
     - bzip2-libs
     - ca-certificates
     - cairo
     - cairo-gobject
-    - cdparanoia-libs
-    - cjson
-    - cmake-filesystem
-    - codec2
+    - centos-gpg-keys
+    - centos-stream-release
+    - centos-stream-repos
     - colord-libs
     - coreutils
     - coreutils-common
@@ -86,7 +79,6 @@ flatpak:
     - cracklib-dicts
     - crypto-policies
     - crypto-policies-scripts
-    - cups-client
     - cups-libs
     - curl
     - cyrus-sasl-lib
@@ -104,8 +96,7 @@ flatpak:
     - dejavu-serif-fonts
     - desktop-file-utils
     - diffutils
-    - double-conversion
-    - dnf5
+    - dnf-data
     - duktape
     - e2fsprogs-libs
     - elfutils-debuginfod-client
@@ -113,48 +104,22 @@ flatpak:
     - elfutils-libelf
     - elfutils-libs
     - emacs-filesystem
-    - enchant2
     - expat
-    - fcitx5-gtk
-    - fcitx5-gtk2
-    - fcitx5-gtk3
-    - fcitx5-gtk4
-    - fcitx5-qt
-    - fcitx5-qt-libfcitx5qtdbus
-    - fcitx5-qt5
-    - fcitx5-qt6
     - fdk-aac-free
-    - fedora-gpg-keys
-    - fedora-release
-    - fedora-release-common
-    - fedora-release-identity-basic
-    - fedora-repos
-    - ffmpeg-free
     - fftw-libs-double
     - file
     - file-libs
     - filesystem
     - findutils
-    - flac
     - flac-libs
     - flatpak-runtime-config
     - flatpak-spawn
     - flatpak-xdg-utils
-    - flite
-    - fmt
     - fontconfig
     - fonts-filesystem
-    - freeglut
     - freetype
-    - frei0r-plugins
     - fribidi
-    - game-music-emu
-    - gavl
     - gawk
-    - gcr
-    - gcr-libs
-    - gcr3
-    - gcr3-base
     - gdbm
     - gdbm-libs
     - gdk-pixbuf2
@@ -165,23 +130,14 @@ flatpak:
     - gettext-libs
     - gettext-runtime
     - giflib
-    - gjs
     - glib-networking
     - glib2
     - glibc
     - glibc-all-langpacks
     - glibc-common
-    - glibc-gconv-extra
     - glibc-minimal-langpack
-    - glx-utils
     - gmp
     - gmp-c++
-    - gnome-themes-extra
-    - gnome-user-docs
-    - gnu-free-fonts-common
-    - gnu-free-mono-fonts
-    - gnu-free-sans-fonts
-    - gnu-free-serif-fonts
     - gnupg2
     - gnupg2-smime
     - gnutls
@@ -202,36 +158,26 @@ flatpak:
     - grep
     - gsettings-desktop-schemas
     - gsm
-    - gssdp
     - gstreamer1
-    - gstreamer1-plugin-libav
-    - gstreamer1-plugin-openh264
     - gstreamer1-plugins-bad-free
     - gstreamer1-plugins-bad-free-libs
     - gstreamer1-plugins-base
     - gstreamer1-plugins-good
     - gstreamer1-plugins-good-gtk
-    - gstreamer1-plugins-good-qt
-    - gstreamer1-plugins-good-qt6
-    - gstreamer1-plugins-ugly-free
-    - gtk-immodules-imsettings
+    -   name: gstreamer1-plugins-ugly-free
+        platforms:
+            only:
+            - aarch64
+            - ppc64le
+            - x86_64
     - gtk-update-icon-cache
-    - gtk2
-    - gtk2-immodules
     - gtk3
     - gtk3-immodule-xim
-    - gtk3-immodules
     - gtk4
-    - gtksourceview5
-    - gupnp
-    - gupnp-igd
-    - gvfs-client
     - gzip
     - harfbuzz
     - harfbuzz-icu
     - hicolor-icon-theme
-    - highcontrast-icon-theme
-    - highway
     - hostname
     - hunspell
     - hunspell-af
@@ -289,26 +235,10 @@ flatpak:
     - hunspell-ko
     - hunspell-lt
     - hunspell-lv
-    - hunspell-nb
     - hunspell-ne
-    - hunspell-nl
-    - hunspell-nn
-    - hunspell-oc
-    - hunspell-pl
-    - hunspell-pt
-    - hunspell-pt-BR
-    - hunspell-ro
-    - hunspell-ru
-    - hunspell-si
-    - hunspell-sk
-    - hunspell-sl
-    - hunspell-sq
-    - hunspell-sr
-    - hunspell-sv
     - hunspell-sw
     - hunspell-te
     - hunspell-th
-    - hunspell-tr
     - hunspell-uk
     - hunspell-vi
     - hwdata
@@ -330,7 +260,6 @@ flatpak:
     - hyphen-hr
     - hyphen-hu
     - hyphen-id
-    - hyphen-is
     - hyphen-it
     - hyphen-lt
     - hyphen-lv
@@ -339,7 +268,6 @@ flatpak:
     - hyphen-nn
     - hyphen-pl
     - hyphen-pt
-    - hyphen-pt-BR
     - hyphen-ro
     - hyphen-ru
     - hyphen-sk
@@ -349,103 +277,68 @@ flatpak:
     - hyphen-te
     - hyphen-uk
     - hyphen-zu
-    - ibus-gtk2
     - ibus-gtk3
-    - ibus-gtk4
     - ibus-libs
-    - ilbc
     - iso-codes
-    - itstool
-    - jansson
-    - jasper-libs
-    - javascriptcoregtk4.0
-    - javascriptcoregtk4.1
-    - javascriptcoregtk6.0
     - jbigkit-libs
     - json-c
     - json-glib
-    - jxl-pixbuf-loader
     - keyutils-libs
     - kmod-libs
     - krb5-libs
-    - krb5-pkinit
-    - krb5-workstation
-    - ladspa
     - lame
     - lame-libs
     - lcms2
-    - lcms2-utils
-    - leptonica
     - less
-    - liba52
+    -   name: liba52
+        platforms:
+            only:
+            - aarch64
+            - ppc64le
+            - x86_64
     - libacl
     - libadwaita
-    - libaom
     - libappstream-glib
     - libarchive
     - libasan
-    - libass
     - libassuan
     - libasyncns
     - libatomic
     - libattr
-    - libavc1394
-    - libavcodec-free
-    - libavdevice-free
-    - libavfilter-free
-    - libavformat-free
-    - libavif
-    - libavutil-free
-    - libb2
     - libblkid
-    - libbluray
     - libbrotli
-    - libbs2b
-    - libcaca
     - libcanberra
     - libcanberra-gtk3
     - libcap
     - libcap-ng
-    - libcbor
-    - libcdio
-    - libcdio-paranoia
-    - libchromaprint
-    - libcloudproviders
+    -   name: libcdio
+        platforms:
+            only:
+            - aarch64
+            - ppc64le
+            - x86_64
     - libcom_err
     - libcurl
     - libdatrie
-    - libdav1d
-    - libdc1394
     - libdecor
-    - libdex
-    - libdovi
+    - libdnf
     - libdrm
-    - libdvbv5
     - libdvdnav
     - libdvdread
     - libeconf
     - libedit
-    - libei
-    - libei-utils
-    - libeis
     - libepoxy
     - liberation-fonts-common
     - liberation-mono-fonts
     - liberation-sans-fonts
     - liberation-serif-fonts
-    - libevdev
-    - libevdev-utils
     - libevent
     - libexif
     - libfdisk
     - libffi
-    - libfido2
-    - libfl2
     - libgcab1
     - libgcc
     - libgcrypt
-    - libgdither
-    - libgee
     - libgfortran
     - libglvnd
     - libglvnd-egl
@@ -456,7 +349,6 @@ flatpak:
     - libgpg-error
     - libgudev
     - libgusb
-    - libhandy
     -   name: libhwasan
         platforms:
             only:
@@ -465,40 +357,34 @@ flatpak:
     - libICE
     - libicu
     - libidn2
-    - libiec61883
-    - libinput
     - libitm
     - libjpeg-turbo
     - libjpeg-turbo-utils
-    - libjxl
-    - libkadm5
     - libksba
     - liblc3
-    - libldac
-    - libldb
+    -   name: libldac
+        platforms:
+            only:
+            - aarch64
+            - ppc64le
+            - x86_64
     - liblerc
     - liblsan
-    - libmanette
-    - libmng
-    - libmodplug
+    - libmodulemd
     - libmount
-    - libmpeg2
-    - libmysofa
+    -   name: libmpeg2
+        platforms:
+            only:
+            - aarch64
+            - ppc64le
+            - x86_64
     - libnghttp2
-    - libnice
-    - libnice-gstreamer1
-    - libnotify
     - libnsl
-    - libnsl2
-    - libobjc
-    - liboeffis
     - libogg
-    - libopenmpt
     - libpciaccess
+    - libpeas1
     - libpkgconf
-    - libplacebo
     - libpng
-    - libpostproc-free
     - libproxy
     - libpsl
     - libpwquality
@@ -507,52 +393,42 @@ flatpak:
             only:
             - ppc64le
             - x86_64
-    - librabbitmq
-    - libraw1394
-    - librist
+    - librepo
     - librsvg2
     - librsvg2-tools
+    -   name: librtas
+        platforms:
+            only:
+            - ppc64le
     - libsamplerate
     - libsbc
     - libseccomp
-    - libsecret
     - libselinux
     - libselinux-utils
     - libsemanage
     - libsepol
     - libsepol-utils
-    - libshaderc
     - libshout
     - libSM
     - libsmartcols
-    - libsmbclient
     - libsndfile
-    - libsodium
-    - libsoup
+    - libsolv
     - libsoup3
     - libsrtp
     - libss
     - libssh
     - libssh-config
     - libstdc++
-    - libstemmer
-    - libswresample-free
-    - libswscale-free
-    - libtalloc
     - libtasn1
     - libtdb
-    - libtevent
     - libthai
     - libtheora
     - libtiff
-    - libtirpc
     - libtool-ltdl
     - libtracker-sparql
     - libtsan
     - libubsan
-    - libudfread
     - libunistring
-    - libunwind
     - liburing
     - libusb1
     - libutempter
@@ -561,27 +437,13 @@ flatpak:
     - libva
     - libvdpau
     - libverto
-    - libvisual
-    -   name: libvmaf
-        platforms:
-            only:
-            - x86_64
     - libvorbis
-    -   name: libvpl
-        platforms:
-            only:
-            - x86_64
     - libvpx
-    - libwacom
-    - libwacom-data
     - libwayland-client
     - libwayland-cursor
     - libwayland-egl
     - libwayland-server
-    - libwbclient
     - libwebp
-    - libwebp-tools
-    - libwpe
     - libX11
     - libX11-common
     - libX11-xcb
@@ -598,7 +460,6 @@ flatpak:
     - libXi
     - libXinerama
     - libxkbcommon
-    - libxkbcommon-utils
     - libxkbcommon-x11
     - libxkbfile
     - libxml2
@@ -606,7 +467,6 @@ flatpak:
     - libXpm
     - libXrandr
     - libXrender
-    - libXScrnSaver
     - libxshmfence
     - libxslt
     - libXt
@@ -615,62 +475,30 @@ flatpak:
     - libXxf86vm
     - libyaml
     - libzstd
-    - lilv-libs
     - llvm-libs
-    - lm_sensors-libs
-    - lmdb-libs
-    - lpcnetfreedv
     - lua-libs
-    - lv2
     - lz4
     - lz4-libs
-    - lzip
     - mailcap
-    - mbedtls
     - mesa-dri-drivers
     - mesa-filesystem
     - mesa-libEGL
     - mesa-libgbm
     - mesa-libGL
     - mesa-libglapi
-    - mesa-libGLU
-    - mesa-va-drivers
-    - mlocate
-    - mozjs115
+    -   name: mesa-vulkan-drivers
+        platforms:
+            only:
+            - x86_64
+    - microdnf
     - mpdecimal
     - mpfr
     - mpg123-libs
-    - mtdev
-    - mythes
-    - mythes-bg
-    - mythes-ca
-    - mythes-cs
-    - mythes-da
-    - mythes-de
-    - mythes-en
-    - mythes-es
-    - mythes-fr
-    - mythes-hu
-    - mythes-it
-    - mythes-lv
-    - mythes-nb
-    - mythes-ne
-    - mythes-nn
-    - mythes-pl
-    - mythes-pt
-    - mythes-ro
-    - mythes-ru
-    - mythes-sk
-    - mythes-sl
-    - mythes-sv
-    - mythes-uk
     - nano
-    - ncompress
     - ncurses
     - ncurses-base
     - ncurses-libs
     - nettle
-    - noopenh264
     - npth
     - nspr
     - nss
@@ -678,21 +506,11 @@ flatpak:
     - nss-softokn-freebl
     - nss-sysinit
     - nss-util
-    - nss_db
-    - nss_hesiod
-    - nuspell
     - ocl-icd
-    - openal-soft
-    - opencore-amr
     - openjpeg2
     - openldap
-    - openpgm
-    - openssh
-    - openssh-clients
     - openssl-libs
-    - openssl-pkcs11
     - opus
-    - opusfile
     - orc
     - p11-kit
     - p11-kit-server
@@ -702,183 +520,89 @@ flatpak:
     - pango
     - pciutils
     - pciutils-libs
-    - pcre
     - pcre2
     - pcre2-syntax
     - pcre2-utf16
     - pcre2-utf32
-    - pinentry
-    - pinentry-gnome3
     - pipewire-alsa
     - pipewire-gstreamer
     - pipewire-jack-audio-connection-kit
     - pipewire-jack-audio-connection-kit-libs
     - pipewire-libs
-    - pipewire-v4l2
     - pixman
     - pkgconf
     - pkgconf-m4
     - pkgconf-pkg-config
+    - plocate
     - popt
     - procps-ng
     - protobuf-c
-    - psl
     - publicsuffix-list-dafsa
     - pulseaudio-libs
     - pulseaudio-libs-glib2
-    - python-pip-wheel
-    - python-pyqt6-rpm-macros
-    - python-qt5-rpm-macros
     - python-unversioned-command
     - python3
-    - python3-attrs
     - python3-brotli
-    - python3-cairo
-    - python3-dbus
-    - python3-gobject
-    - python3-gobject-base
-    - python3-jinja2
     - python3-libs
     - python3-libxml2
-    - python3-libxslt
     - python3-mako
     - python3-markdown
     - python3-markupsafe
     - python3-packaging
-    - python3-pyqt5-sip
-    - python3-pyqt6-base
-    - python3-pyqt6-sip
-    - python3-qt5-base
+    - python3-pip-wheel
     - python3-setuptools
     - python3-six
-    - qadwaitadecorations-qt5
-    - qadwaitadecorations-qt6
-    - qt-settings
-    - qt5-qtbase
-    - qt5-qtbase-common
-    - qt5-qtbase-gui
-    - qt5-qtcharts
-    - qt5-qtdeclarative
-    - qt5-qtgraphicaleffects
-    - qt5-qtimageformats
-    - qt5-qtmultimedia
-    - qt5-qtquickcontrols
-    - qt5-qtquickcontrols2
-    - qt5-qtsensors
-    - qt5-qtsvg
-    - qt5-qttranslations
-    - qt5-qtwayland
-    - qt5-qtx11extras
-    - qt5-qtxmlpatterns
-    - qt6-qt5compat
-    - qt6-qtbase
-    - qt6-qtbase-common
-    - qt6-qtbase-gui
-    - qt6-qtcharts
-    - qt6-qtdeclarative
-    - qt6-qtimageformats
-    - qt6-qtmultimedia
-    - qt6-qtpositioning
-    - qt6-qtserialport
-    - qt6-qtshadertools
-    - qt6-qtsvg
-    - qt6-qttranslations
-    - qt6-qtwayland
-    - rav1e-libs
     - readline
+    - redhat-text-vf-fonts
     - rpm
     - rpm-libs
     - rpm-sequoia
     - rsvg-pixbuf-loader
-    - rubberband
-    - samba-client-libs
-    - samba-common
-    - samba-common-libs
     - SDL2
-    - SDL2_image
-    - SDL2_mixer
-    - SDL2_net
-    - SDL2_ttf
     - sed
-    - serd
     - setup
-    - sgml-common
     - shadow-utils
     - shared-mime-info
-    - slang
-    - snappy
-    - sord
     - sound-theme-freedesktop
     - soundtouch
-    - soxr
     - speech-dispatcher-libs
     - speex
     - speexdsp
-    - spirv-tools-libs
     - sqlite-libs
-    - sratom
-    - srt-libs
-    - svt-av1-libs
     - systemd-libs
-    - systemd-standalone-tmpfiles
     - taglib
     - tar
-    - tesseract
-    - tesseract-langpack-eng
-    - tesseract-tessdata-doc
     - tpm2-tss
-    - tslib
-    - turbojpeg
     - twolame-libs
     - tzdata
-    - tzdata-java
     - unbound-libs
     - unzip
     - util-linux
     - util-linux-core
-    - vamp-plugin-sdk
-    - vapoursynth-libs
-    - vid.stab
-    - vo-amrwbenc
     - vulkan-loader
     - wavpack
-    - webkit2gtk4.0
-    - webkit2gtk4.1
-    - webkitgtk6.0
-    - webp-pixbuf-loader
     - webrtc-audio-processing
-    - webrtc-audio-processing0.3
     - wget2
     - wget2-libs
     - wget2-wget
     - which
-    - woff2
-    - wpebackend-fdo
-    - xcb-proto
     - xcb-util
     - xcb-util-cursor
     - xcb-util-image
     - xcb-util-keysyms
     - xcb-util-renderutil
     - xcb-util-wm
-    - xdg-dbus-proxy
     - xdg-user-dirs
     - xdg-utils
     - xkbcomp
     - xkeyboard-config
     - xml-common
     - xprop
-    - xvidcore
     - xxhash-libs
     - xz
     - xz-libs
     - xz-lzma-compat
-    - yelp
-    - yelp-libs
-    - yelp-xsl
-    - zeromq
-    - zimg
+    - zenity
     - zip
     - zlib-ng-compat
     - zstd
-    - zvbi

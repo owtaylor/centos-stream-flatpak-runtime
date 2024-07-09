@@ -1,6 +1,6 @@
-[fedora]
-name=Fedora Flatpak Runtime Build
-baseurl=https://kojipkgs.fedoraproject.org/repos/f40-flatpak-runtime-build/latest/$basearch
+[c10s-build]
+name=Centos Stream 10 Build
+baseurl=https://kojihub.stream.centos.org/kojifiles/repos/c10s-build/latest/$basearch
 enabled=1
 countme=1
 metadata_expire=6h

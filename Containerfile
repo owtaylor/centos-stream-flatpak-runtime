@@ -1,11 +1,11 @@
-FROM quay.io/redhat-user-workloads/otaylor-tenant/flatpak-module-tools/flatpak-module-tools@sha256:b786d0168bbf3593c822fd75b375e15f331d144427a347d823c48ca85323ce37 as install
+FROM quay.io/redhat-user-workloads/cs-flatpaks-tenant/build/flatpak-build@sha256:47aebd6d46ec097f0e8e2cfc83f75d67fa3dde85297ceeb0cc9d6dfde07a35a5 as install
 
 COPY container.yaml /tmp/
 RUN \
     flatpak-module container-install \
         --containerspec=/tmp/container.yaml
 
-FROM quay.io/redhat-user-workloads/otaylor-tenant/flatpak-module-tools/flatpak-module-tools@sha256:b786d0168bbf3593c822fd75b375e15f331d144427a347d823c48ca85323ce37 as export
+FROM quay.io/redhat-user-workloads/cs-flatpaks-tenant/build/flatpak-build@sha256:47aebd6d46ec097f0e8e2cfc83f75d67fa3dde85297ceeb0cc9d6dfde07a35a5 as export
 
 COPY container.yaml /tmp
 RUN --mount=type=bind,rw,src=/contents,dst=/contents,from=install \

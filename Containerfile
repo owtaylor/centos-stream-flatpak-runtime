@@ -2,7 +2,7 @@ FROM quay.io/redhat-user-workloads/cs-flatpaks-tenant/build/flatpak-build@sha256
 
 COPY container.yaml /tmp/
 RUN \
-    flatpak-module container-install \
+    flatpak-container container-install \
         --containerspec=/tmp/container.yaml
 
 FROM quay.io/redhat-user-workloads/cs-flatpaks-tenant/build/flatpak-build@sha256:611cd249bc4c0846ad7f14feb131043030eb94a0dbfa8dddfc01f654b2ae270f as export
@@ -10,7 +10,7 @@ FROM quay.io/redhat-user-workloads/cs-flatpaks-tenant/build/flatpak-build@sha256
 COPY container.yaml /tmp
 RUN --mount=type=bind,rw,src=/contents,dst=/contents,from=install \
     --mount=type=bind,rw,z,src=export,dst=/export \
-    flatpak-module container-export \
+    flatpak-container container-export \
         --containerspec=/tmp/container.yaml \
         --resultdir=/export
 
